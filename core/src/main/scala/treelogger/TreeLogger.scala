@@ -11,7 +11,7 @@ trait TreeLogger[F[_], A] {
 
   protected def upBranch: F[Unit]
 
-  final def branch[B](value: => A)(inner: F[B])(implicit F: Monad[F]): F[B] =
+  final def branch[B](value: => A)(inner: => F[B])(implicit F: Monad[F]): F[B] =
     for {
       _ <- downBranch(value)
       result <- inner
